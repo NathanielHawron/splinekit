@@ -5,33 +5,26 @@
 
 #include "splinekit/WeightManager.hpp"
 #include "splinekit/WeightManagerMat.hpp"
+#include "splinekit/Points.hpp"
 
 namespace splinekit{
-    constexpr int VERSION_MAJOR = 0;
-    constexpr int VERSION_MINOR = 0;
-    constexpr int VERSION_PATCH = 0;
-    constexpr char VERSION_TAG  = 'a';
-    std::string versionString();
     template <class T, template <class> class WM>
     class CurveT{
     protected:
         std::shared_ptr<const WM<T>> weightManager;
     public:
-        // Number of dimensions in point
-        const uint16_t pointOrder;
-        // Number of parameters in a point (including intermediate parameters)
-        const uint16_t pointSize;
-        std::vector<T> points;
+        PointsT<T> points;
     public:
-        // Construct a curve using a WeightManager's CreateInfo. pointSize defaults to WeightManager's weight count.
-        CurveT(const typename WM<T>::CreateInfo &createInfo, uint16_t pointOrder = 3, uint16_t pointSize = 0);
-        // Construct a curve using a WeightManager's common curve. pointSize defaults to WeightManager's weight count.
-        CurveT(const typename WM<T>::CommonCurve &curveType, uint16_t pointOrder = 3, uint16_t pointSize = 0);
-        // Construct a curve using another curve's WeightManager. pointOrder defaults to curve's pointOrder, pointSize defaults to curve's pointSize.
-        CurveT(const CurveT &curve, uint16_t pointOrder = 0, uint16_t pointSize = 0);
+        // Construct a curve using a WeightManager's CreateInfo. pointLength defaults to WeightManager's weight count.
+        CurveT(const typename WM<T>::CreateInfo &createInfo, uint16_t pointDimensions = 3, uint16_t pointLength = 0);
+        // Construct a curve using a WeightManager's common curve. pointLength defaults to WeightManager's weight count.
+        CurveT(const typename WM<T>::CommonCurve &curveType, uint16_t pointDimensions = 3, uint16_t pointLength = 0);
+        // Construct a curve using another curve's WeightManager. pointDimensions defaults to curve's pointDimensions, pointLength defaults to curve's pointLength.
+        CurveT(const CurveT &curve, uint16_t pointDimensions = 0, uint16_t pointLength = 0);
 
         const inline std::shared_ptr<const WM<T>> &getWeightManager() const {return this->weightManager;};
 
+        inline PointsT<T> &getPoints(){return this->points;};
         void addPoint();
         void addPoint(T *point);
         void removePoint(std::size_t index);

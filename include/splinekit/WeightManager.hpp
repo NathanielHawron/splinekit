@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <iostream>
 
+#include "splinekit/version.hpp"
+
 namespace splinekit{
     template<class T>
     class WeightManager{

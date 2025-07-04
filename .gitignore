@@ -2,6 +2,7 @@
 lib
 .bin
 .vscode
+coverage
 
 # Prerequisites
 *.d
