@@ -35,6 +35,7 @@ namespace splinekit{
         }
     public:
         inline uint16_t getWeightCount() const {return this->weightDataLayout.weightCount;};
+        inline uint16_t getParameterCount() const {uint16_t res = 0;for(uint16_t i=0;i<this->weightDataLayout.weightCount;++i){res = std::max(this->weightDataLayout.weightData[i].index, res);}return res+1;};
         virtual void calculateWeights(T t, T *res) const = 0;
         virtual void calculateWeights(T t, T *res, int32_t d) const = 0;
     public:

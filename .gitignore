@@ -3,6 +3,7 @@ lib
 .bin
 .vscode
 coverage
+saves
 
 # Prerequisites
 *.d

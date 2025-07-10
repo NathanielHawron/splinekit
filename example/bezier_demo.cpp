@@ -144,7 +144,7 @@ typedef splinekit::WeightManagerMatT<float> WM_t;
 typedef splinekit::CurveT<float, splinekit::WeightManagerMatT> Curve_t;
 
 int main(){
-    std::cout << splinekit::versionString() << " (tested on v0.0.1-a)" << std::endl;
+    std::cout << splinekit::LIB_VERSION.toString() << " (tested on v0.0.1-a)" << std::endl;
 
     splinekit::WeightManager<float>::printWeightDataDescription();
 

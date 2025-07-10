@@ -141,7 +141,7 @@ splinekit::WeightManagerMatT<float>::CreateInfo reduced1_createInfo = {
 };
 
 int main(){
-    std::cout << splinekit::versionString() << " (tested on v0.0.0-a)" << std::endl;
+    std::cout << splinekit::LIB_VERSION.toString() << " (tested on v0.0.0-a)" << std::endl;
 
     splinekit::WeightManager<float>::printWeightDataDescription();
     
