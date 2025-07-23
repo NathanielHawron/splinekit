@@ -3,7 +3,7 @@ CXX := g++ --std=c++17
 CONFIG ?= RELEASE 	# COVERAGE		DEBUG
 TARGET ?= ARCH		# WINDOWS
 
-override FILES := version WeightManagerMat Curve Points
+override FILES := version WeightManagerMat curve/Curve curve/CurveLength curve/CurveExtrema Points
 override FILES_HEADER_ONLY := WeightManager
 override SRC := $(addprefix src/, $(addsuffix .cpp, $(FILES))) #src/version.cpp src/WeightManagerMat.cpp src/Curve.cpp src/Points.cpp
 override OBJ := $(addprefix .o/, $(addsuffix .o, $(FILES))) #.o/version.o .o/WeightManagerMat.o .o/Curve.o .o/Points.o
@@ -48,6 +48,7 @@ override LIB_PATH := $(LIB_DIR)/$(LIB)_$(CONFIG)_$(TARGET).a
 init:
 	-mkdir -p .bin
 	-mkdir -p .o
+	-mkdir -p .o/curve
 	-mkdir -p lib
 
 .o/%.o: src/%.cpp
@@ -85,5 +86,6 @@ coverage: clear coverage_clear run $(COV)
 
 clear:
 	-@rm $(BIN_DIR)/* -r
-	-@rm .o/*
+	-@rm .o/* -r
+	-@mkdir -p .o/curve
 	-@rm $(LIB_DIR)/*

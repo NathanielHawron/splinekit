@@ -190,7 +190,9 @@ namespace splinekit{
             DimensionMap x = {(uint16_t)0}, DimensionMap y = {(uint16_t)1}, DimensionMap z = {},
             DimensionMap r = {}, DimensionMap g = {}, DimensionMap b = {}, DimensionMap a = {}
         ) const;
+        // Saves points in a .csv file as is
         void saveAsCSV(std::filesystem::path filePath, bool header=true, std::string *headers=nullptr, uint16_t headerCount=0) const;
+        // Saves points in a .txt, similar to saveAsCSV except with brackets around points and custom line delimiter
         void saveAsTXT(std::filesystem::path filePath, std::string delim="\n", bool header=true, std::string *headers=nullptr, uint16_t headerCount=0) const;
         // NOTE: NYI (function does nothing)
         void saveAsRAW(std::filesystem::path filePath) const;

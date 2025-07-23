@@ -57,6 +57,7 @@ namespace splinekit{
         // Create a WeightManager that generates weights for a common polynomial basis matrix based spline
         WeightManagerMatT(CommonCurve curveType);
         ~WeightManagerMatT();
+        uint16_t getOrder() const;
         void calculateWeights(T t, T *res) const;
         void calculateWeights(T t, T *res, int32_t d) const;
         void printMatrix() const;

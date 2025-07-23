@@ -1,5 +1,7 @@
 #include "splinekit/Curve.hpp"
 
+#include <cstring>
+#include <cmath>
 
 using namespace splinekit;
 
@@ -43,16 +45,22 @@ T* CurveT<T,WM>::getPoint(std::size_t index){
 }
 
 template <class T, template <class> class WM>
-void CurveT<T,WM>::calculatePoint(T *res, T t, uint16_t order) const {
+void CurveT<T,WM>::calculatePoint(T *res, T t, uint16_t derivative, bool endDerivative) const {
     const WM<T> *wm = this->weightManager.get();
     const typename WeightManager<T>::WeightDataLayout &weightDataLayout = wm->weightDataLayout;
     
     std::size_t index = t;
     T tDec = t-index;
+    if(endDerivative){
+        if(tDec == (T)(0.0)){
+            --index;
+            tDec = (T)1.0;
+        }
+    }
     
     T weights[weightDataLayout.weightCount];
     
-    wm->calculateWeights(tDec, weights, order);
+    wm->calculateWeights(tDec, weights, derivative);
 
     for(uint16_t i=0;i<this->points.dimensions;++i){
         res[i] = 0;
@@ -66,7 +74,7 @@ void CurveT<T,WM>::calculatePoint(T *res, T t, uint16_t order) const {
     }
 }
 template <class T, template <class> class WM>
-void CurveT<T,WM>::calculatePointsLinear(PointsT<T> &points, std::size_t amount, uint16_t paramIndex, uint16_t order) const {
+void CurveT<T,WM>::calculatePointsLinear(PointsT<T> &points, std::size_t amount, uint16_t paramIndex, uint16_t derivative) const {
     if(paramIndex >= points.length){
         throw std::invalid_argument("[CurveT]: Param index ("+std::to_string(paramIndex)+") must be lower than point's length ("+std::to_string(points.length)+")");
     }
@@ -79,7 +87,7 @@ void CurveT<T,WM>::calculatePointsLinear(PointsT<T> &points, std::size_t amount,
     
     T step = 1.0/(T)amount;
     for(std::size_t i=0;i<amount;++i){
-        wm->calculateWeights(step*(T)i, weights[i], order);
+        wm->calculateWeights(step*(T)i, weights[i], derivative);
     }
 
     for(std::size_t p=0;p<this->points.pointCount();++p){
@@ -96,7 +104,6 @@ void CurveT<T,WM>::calculatePointsLinear(PointsT<T> &points, std::size_t amount,
         }
     }
 }
-
 
 template class CurveT<float,WeightManagerMatT>;
 template class CurveT<double,WeightManagerMatT>;

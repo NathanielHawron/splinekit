@@ -328,6 +328,11 @@ WeightManagerMatT<T>::~WeightManagerMatT(){
 }
 
 template <class T>
+uint16_t WeightManagerMatT<T>::getOrder() const {
+    return this->getWeightCount();
+}
+
+template <class T>
 void WeightManagerMatT<T>::calculateWeights(T t, T *res) const {
     uint16_t weightCount = this->getWeightCount();
     memset(res, 0, sizeof(T) * weightCount);
