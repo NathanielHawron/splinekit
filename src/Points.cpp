@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <fstream>
+#include <cstring>
 
 using namespace splinekit;
 
